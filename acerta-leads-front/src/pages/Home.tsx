@@ -1,23 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import api from '../services/api';
-import styled from 'styled-components';
+import { HomeContainer, Header, Title, ButtonContainer } from '../styles/HomeStyles';
 import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
-
-const HomeContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: #f0f0f0;
-`;
-
-interface Lead {
-  id: number;
-  name: string;
-  email: string;
-}
+import { Lead } from '../interfaces/Home/IHome';
+import ButtonNewLead from '../components/buttons/ButtonNewLead';
 
 const Home: React.FC = () => {
   const [leads, setLeads] = useState<Lead[]>([]);
@@ -30,7 +17,12 @@ const Home: React.FC = () => {
 
   return (
     <HomeContainer>
-      <h1>Home Page</h1>
+      <Header>
+        <Title>Consulta de Leads</Title>
+        <ButtonContainer>
+          <ButtonNewLead />
+        </ButtonContainer>
+      </Header>
       <ul>
         {leads.map(lead => (
           <li key={lead.id}>
