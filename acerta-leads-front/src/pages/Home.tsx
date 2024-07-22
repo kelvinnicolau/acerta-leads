@@ -1,19 +1,31 @@
 import React, { useEffect, useState } from 'react';
-import api from '../services/api';
-import { HomeContainer, Header, Title, ButtonContainer } from '../styles/HomeStyles';
-import { Link } from 'react-router-dom';
-import { ToastContainer, toast } from 'react-toastify';
+import { HomeContainer, Header, Title, ButtonContainer, SearchContainer, StyledListItem } from '../styles/HomeStyles';
+import { ToastContainer } from 'react-toastify';
 import { Lead } from '../interfaces/Home/IHome';
 import ButtonNewLead from '../components/buttons/ButtonNewLead';
+import LeadSearch from '../components/lead-search/LeadSearch';
 
 const Home: React.FC = () => {
   const [leads, setLeads] = useState<Lead[]>([]);
 
+  // Função para buscar leads da API
+  const fetchLeads = async () => {
+    try {
+      // const response = await api.get('/leads');
+      // setLeads(response.data);
+    } catch (error) {
+      console.error('Erro ao buscar dados', error);
+    }
+  };
+
+  // useEffect para carregar os leads ao montar o componente
   useEffect(() => {
-    api.get('/leads')
-      .then(response => setLeads(response.data))
-      .catch(error => toast.error('Erro ao buscar dados'));
+    fetchLeads();
   }, []);
+
+  const handleSearch = (searchResults: Lead[]) => {
+    setLeads(searchResults);
+  };
 
   return (
     <HomeContainer>
@@ -23,14 +35,20 @@ const Home: React.FC = () => {
           <ButtonNewLead />
         </ButtonContainer>
       </Header>
-      <ul>
-        {leads.map(lead => (
-          <li key={lead.id}>
-            {lead.name} - {lead.email}
-          </li>
-        ))}
-      </ul>
-      <Link to="/about">Go to About</Link>
+      <LeadSearch onSearch={handleSearch} />
+      <SearchContainer>
+      <StyledListItem>
+        {leads.length > 0 ? (
+          leads.map((lead) => (
+            <li key={lead.id}>
+              {lead.name} - {lead.email}
+            </li>
+          ))
+        ) : (
+          <li>Nenhum resultado encontrado</li>
+        )}
+      </StyledListItem>
+      </SearchContainer>
       <ToastContainer />
     </HomeContainer>
   );
