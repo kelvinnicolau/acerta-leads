@@ -1,5 +1,6 @@
 import { collection, addDoc, getDocs, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
+import { Lead } from '../interfaces/Home/IHome';
 
 // Adicionar um lead
 export const addLead = async (lead: { name: string; cpf: string }) => {
@@ -11,32 +12,28 @@ export const addLead = async (lead: { name: string; cpf: string }) => {
 };
 
 // Obter todos os leads
-export const getLeads = async () => {
-  try {
-    const querySnapshot = await getDocs(collection(db, 'leads'));
-    return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-  } catch (error) {
-    console.error('Error getting documents: ', error);
-    return [];
-  }
+export const fetchLeadsFromFirebase = async (): Promise<Lead[]> => {
+  const leadsCollection = collection(db, 'leads');
+  const leadsSnapshot = await getDocs(leadsCollection);
+  const leadsList = leadsSnapshot.docs.map(doc => ({
+    id: doc.id,
+    ...doc.data(),
+  })) as Lead[];
+  return leadsList;
 };
 
 // Atualizar um lead
-export const updateLead = async (id: string, updatedLead: { name?: string; cpf?: string }) => {
-  try {
-    const leadDoc = doc(db, 'leads', id);
-    await updateDoc(leadDoc, updatedLead);
-  } catch (error) {
-    console.error('Error updating document: ', error);
-  }
-};
+// export const updateLead = async (id: string, updatedLead: { name?: string; cpf?: string }) => {
+//   try {
+//     const leadDoc = doc(db, 'leads', id);
+//     await updateDoc(leadDoc, updatedLead);
+//   } catch (error) {
+//     console.error('Error updating document: ', error);
+//   }
+// };
 
 // Excluir um lead
-export const deleteLead = async (id: string) => {
-  try {
-    const leadDoc = doc(db, 'leads', id);
-    await deleteDoc(leadDoc);
-  } catch (error) {
-    console.error('Error deleting document: ', error);
-  }
+export const deleteLeadFromFirebase = async (id: string): Promise<void> => {
+  const leadDocRef = doc(db, 'leads', id);
+  await deleteDoc(leadDocRef);
 };

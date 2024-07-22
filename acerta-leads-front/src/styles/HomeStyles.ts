@@ -45,4 +45,36 @@ export const StyledListItem = styled.li`
   padding: 24px;
 `;
 
+// export const StyledListItem = styled.ul`
+//   list-style: none;
+//   padding: 0;
+// `;
+
+export const ListItem = styled.li`
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  border-bottom: 1px solid #ccc;
+  
+  div {
+    display: flex;
+    flex-direction: column;
+  }
+`;
+
+export const ButtonGroup = styled.div`
+  display: flex;
+  gap: 10px;
+`;
+
+export const IconButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+
+  &:hover {
+    color: #007BFF;
+  }
+`;
 

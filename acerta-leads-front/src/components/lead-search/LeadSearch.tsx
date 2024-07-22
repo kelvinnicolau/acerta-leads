@@ -12,6 +12,7 @@ import {
   Button,
   Form,
 } from "../../styles/LeadSearchStyles";
+import cpfMask from "../../utils/cpfMask";
 
 interface LeadSearchProps {
     onSearch: (searchResults: Lead[]) => void;
@@ -51,7 +52,7 @@ interface LeadSearchProps {
               id="cpf"
               type="text"
               placeholder="Digite o CPF do cliente"
-              value={cpf}
+              value={cpfMask(cpf)}
               onChange={(e) => setCpf(e.target.value)}
             />
           </FieldContainer>

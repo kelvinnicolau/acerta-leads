@@ -10,6 +10,7 @@ const AppRoutes: React.FC = () => (
       <Route path="/" element={<Home />} />
       <Route path="/about" element={<About />} />
       <Route path="/lead-form" element={<LeadForm />} />
+      <Route path="/lead-form/:id" element={<LeadForm />} />
     </Routes>
   </Router>
 );
