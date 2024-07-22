@@ -1,13 +1,26 @@
-import React, { useEffect, useState } from 'react';
-import { HomeContainer, Header, Title, ButtonContainer, SearchContainer, StyledListItem, ListItem, ButtonGroup, IconButton } from '../styles/HomeStyles';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { Lead } from '../interfaces/Home/IHome';
-import ButtonNewLead from '../components/buttons/ButtonNewLead';
-import LeadSearch from '../components/lead-search/LeadSearch';
-import { fetchLeadsFromFirebase, deleteLeadFromFirebase } from '../services/firestoreService';
-import { FiEdit, FiTrash } from 'react-icons/fi';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import {
+  HomeContainer,
+  Header,
+  Title,
+  ButtonContainer,
+  SearchContainer,
+  TitlesTable,
+  ListItem,
+  ButtonGroup,
+  IconButton,
+} from "../styles/HomeStyles";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { Lead } from "../interfaces/Home/IHome";
+import ButtonNewLead from "../components/buttons/ButtonNewLead";
+import LeadSearch from "../components/lead-search/LeadSearch";
+import {
+  fetchLeadsFromFirebase,
+  deleteLeadFromFirebase,
+} from "../services/firestoreService";
+import { FiEdit, FiTrash } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
 
 const Home: React.FC = () => {
   const [leads, setLeads] = useState<Lead[]>([]);
@@ -19,7 +32,7 @@ const Home: React.FC = () => {
       const leadsList = await fetchLeadsFromFirebase();
       setLeads(leadsList);
     } catch (error) {
-      console.error('Erro ao buscar dados', error);
+      console.error("Erro ao buscar dados", error);
     }
   };
 
@@ -40,10 +53,10 @@ const Home: React.FC = () => {
     try {
       await deleteLeadFromFirebase(id);
       setLeads((prevLeads) => prevLeads.filter((lead) => lead.id !== id));
-      toast.success('Lead excluído com sucesso!');
+      toast.success("Lead excluído com sucesso!");
     } catch (error) {
-      console.error('Erro ao excluir lead', error);
-      toast.error('Erro ao excluir lead');
+      console.error("Erro ao excluir lead", error);
+      toast.error("Erro ao excluir lead");
     }
   };
 
@@ -57,6 +70,14 @@ const Home: React.FC = () => {
       </Header>
       <LeadSearch onSearch={handleSearch} />
       <SearchContainer>
+        <TitlesTable>
+          <div>
+            <p>Nome</p>
+            <p>CPF</p>
+            <p>E-mail</p>
+            <p>Telefone</p>
+          </div>
+        </TitlesTable>
         {leads.length > 0 ? (
           leads.map((lead) => (
             <ListItem key={lead.id}>

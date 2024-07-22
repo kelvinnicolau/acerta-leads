@@ -4,6 +4,7 @@ export const HomeContainer = styled.div`
   align-items: center;
   justify-content: center;
   padding: 0 60px;
+  margin-bottom: 60px;
 `;
 
 export const Header = styled.div`
@@ -45,11 +46,6 @@ export const StyledListItem = styled.li`
   padding: 24px;
 `;
 
-// export const StyledListItem = styled.ul`
-//   list-style: none;
-//   padding: 0;
-// `;
-
 export const ListItem = styled.li`
   display: flex;
   justify-content: space-between;
@@ -58,13 +54,15 @@ export const ListItem = styled.li`
   
   div {
     display: flex;
-    flex-direction: column;
+    justify-content: space-around;
+    width: 100%;
   }
 `;
 
 export const ButtonGroup = styled.div`
   display: flex;
-  gap: 10px;
+  justify-content: space-around;
+    width: 5% !important;
 `;
 
 export const IconButton = styled.button`
@@ -76,5 +74,22 @@ export const IconButton = styled.button`
   &:hover {
     color: #007BFF;
   }
+`;
+
+export const TitlesTable = styled.div`
+   background-color: #F4F5F7;
+   padding: 8px 24px;
+   border-radius: 4px 4px 0px 0px;
+
+    div {
+      display: flex;
+      justify-content: space-around;
+      width: 80%;
+    }
+    
+    p {
+      padding: 0;
+      margin: 0;
+    }
 `;
 
